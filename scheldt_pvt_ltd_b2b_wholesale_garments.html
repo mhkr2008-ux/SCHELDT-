@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheldt Pvt. Ltd. | B2B Mass Garment Wholesale & Container Export</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f0f4f9',
+                            100: '#d9e2ec',
+                            500: '#1d4ed8',
+                            800: '#0f2744',
+                            900: '#0a192f',
+                            950: '#00205b'
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .navy-gradient {
+            background: linear-gradient(135deg, #00205b 0%, #0a192f 100%);
+        }
+        .hero-pattern {
+            background-color: #00205b;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.03); }
+        }
+        .glow-effect {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Top Announcement Bar (Official Reg Details) -->
+    <div class="bg-navy-950 text-slate-300 text-xs py-2 px-4 sm:px-8 border-b border-navy-800 flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center gap-4 flex-wrap">
+            <span class="flex items-center gap-1.5"><i class="fa-solid me-1 fa-building text-amber-400"></i> <strong class="text-white">CIN:</strong> U4912UW2026PTC255732</span>
+            <span class="hidden md:inline text-slate-600">|</span>
+            <span class="hidden md:flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-amber-400"></i> Ghaziabad, UP, India</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="mailto:scheldt@outlook.in" class="hover:text-amber-400 transition-colors flex items-center gap-1"><i class="fa-solid fa-envelope text-amber-400"></i> scheldt@outlook.in</a>
+            <a href="tel:7065733586" class="hover:text-amber-400 transition-colors flex items-center gap-1"><i class="fa-solid fa-phone text-amber-400"></i> +91 7065733586</a>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Company Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-navy-950 rounded-xl flex items-center justify-center text-amber-400 font-black text-2xl shadow-md group-hover:scale-105 transition-transform border border-navy-800">
+                        S
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-tight text-navy-950 font-sans leading-none">Scheldt <span class="text-xs font-semibold uppercase text-amber-600 border border-amber-500/30 bg-amber-50 px-1.5 py-0.5 rounded ml-1">Pvt. Ltd.</span></span>
+                        <span class="text-[10px] tracking-widest text-slate-500 uppercase font-medium mt-1">Mass Garment Manufacturing & Bulk Container Exports</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="hidden lg:flex items-center gap-8 font-medium text-sm text-slate-700">
+                    <a href="#calculator" class="hover:text-navy-950 transition-colors">Container Pricing</a>
+                    <a href="#catalog" class="hover:text-navy-950 transition-colors">Garment Catalog</a>
+                    <a href="#rfq" class="hover:text-navy-950 transition-colors">Custom RFQ Builder</a>
+                    <a href="#tracking" class="hover:text-navy-950 transition-colors">Shipment Tracker</a>
+                    <a href="#about" class="hover:text-navy-950 transition-colors">Company Info</a>
+                </div>
+
+                <!-- User Portal Actions -->
+                <div class="flex items-center gap-3">
+                    <div id="loggedOutState" class="flex items-center gap-2">
+                        <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-navy-950 hover:bg-slate-100 rounded-lg transition-colors">
+                            Log In
+                        </button>
+                        <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-navy-950 hover:bg-navy-900 rounded-lg shadow-sm transition-colors border border-navy-800">
+                            Buyer Portal
+                        </button>
+                    </div>
+                    <div id="loggedInState" class="hidden flex items-center gap-3">
+                        <div class="text-right hidden sm:block">
+                            <div id="userNameDisplay" class="text-xs font-bold text-navy-950">Acme Garment Imports</div>
+                            <div id="userTierDisplay" class="text-[10px] text-amber-600 font-medium">Tier-1 Bulk Import VIP</div>
+                        </div>
+                        <button onclick="logoutUser()" class="p-2 text-slate-500 hover:text-red-600 rounded-lg hover:bg-slate-100 transition-colors" title="Log Out">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-600 hover:text-navy-950">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3">
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-navy-950 font-medium py-1">Container Pricing Calculator</a>
+            <a href="#catalog" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-navy-950 font-medium py-1">Garment Catalog & Samples</a>
+            <a href="#rfq" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-navy-950 font-medium py-1">Custom RFQ Builder</a>
+            <a href="#tracking" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-navy-950 font-medium py-1">Shipment Tracker</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-navy-950 font-medium py-1">Company Info</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner Section -->
+    <header class="hero-pattern text-white py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-navy-800/80 border border-amber-500/30 text-amber-400 text-xs font-semibold backdrop-blur-md">
+                        <i class="fa-solid fa-boxes-packing"></i> Direct Manufacturer & High-Volume Container Exporter
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Global Mass Wholesale Garment Supply <span class="text-amber-400">By Container.</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl font-light">
+                        Scheldt Pvt. Ltd. supplies high-grade textile products, denim, activewear, and everyday apparel for global retailers, importers, and regional distributors. Transparent container-level unit economics.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#calculator" class="px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-navy-950 font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator"></i> Calculate Container Cost
+                        </a>
+                        <a href="#catalog" class="px-6 py-3.5 bg-navy-800 hover:bg-navy-900 border border-slate-700 text-white font-semibold rounded-xl transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-shirt"></i> Explore Sample Catalog
+                        </a>
+                    </div>
+                    <!-- Quick Stats Badges -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-navy-800 text-center sm:text-left">
+                        <div>
+                            <div class="text-2xl font-bold text-white">45,000+</div>
+                            <div class="text-xs text-slate-400">Pcs / 40ft HQ Container</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">100%</div>
+                            <div class="text-xs text-slate-400">Export Inspection Passed</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">45 Days</div>
+                            <div class="text-xs text-slate-400">Turnaround Time</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Card / Official Credentials Badge -->
+                <div class="lg:col-span-5">
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 text-slate-800 shadow-2xl relative border-amber-500/20 border">
+                        <div class="flex justify-between items-start mb-6 border-b border-slate-200 pb-4">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-amber-600 tracking-wider">Verified Corporate Supplier</span>
+                                <h3 class="text-2xl font-black text-navy-950">Scheldt Pvt. Ltd.</h3>
+                            </div>
+                            <span class="w-10 h-10 rounded-full bg-navy-950 text-amber-400 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-certificate"></i>
+                            </span>
+                        </div>
+                        <div class="space-y-4 text-sm">
+                            <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <i class="fa-solid fa-id-card text-navy-950 mt-1"></i>
+                                <div>
+                                    <div class="text-xs text-slate-500 font-semibold">Corporate Identity Number (CIN)</div>
+                                    <div class="font-mono font-bold text-navy-950">U4912UW2026PTC255732</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <i class="fa-solid fa-map-location-dot text-navy-950 mt-1"></i>
+                                <div>
+                                    <div class="text-xs text-slate-500 font-semibold">Registered Headquarters</div>
+                                    <div class="text-slate-800 font-medium">House No. 521 Gali No. 11, New Krishna Nagar Bagu, Ghaziabad, UP, 201009, India</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-xs pt-2">
+                                <div class="bg-navy-50 p-2.5 rounded text-navy-950 font-medium">
+                                    <i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> ISO 9001 Garment Certified
+                                </div>
+                                <div class="bg-navy-50 p-2.5 rounded text-navy-950 font-medium">
+                                    <i class="fa-solid fa-truck-container text-amber-500 mr-1"></i> FOB / CIF Port Export
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FEATURE 1: Interactive Bulk Container Price Calculator & Order Estimator -->
+    <section id="calculator" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-600 font-bold text-sm uppercase tracking-wider">Feature #1: Real-time Unit Economics</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-950 mt-2">Container Price Calculator & Estimator</h2>
+                <p class="text-slate-600 mt-2">Calculate instant wholesale price estimates per container volume, select apparel categories, custom GSM weights, and shipping options.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Inputs Controls -->
+                <div class="lg:col-span-7 bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                    <!-- Garment Category -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-800 mb-2">1. Select Garment Type</label>
+                        <select id="calcGarmentType" onchange="calculateContainerPrice()" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 font-medium text-slate-800 focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            <option value="tshirts" data-unitprice="2.10" data-weight="0.18">Comb-Cotton T-Shirts (180 GSM) - ~$2.10 / pc</option>
+                            <option value="jeans" data-unitprice="7.80" data-weight="0.65">Heavy Denim Jeans (13.5 oz) - ~$7.80 / pc</option>
+                            <option value="hoodies" data-unitprice="8.50" data-weight="0.55">Fleece Hoodies & Sweatshirts - ~$8.50 / pc</option>
+                            <option value="formal" data-unitprice="5.40" data-weight="0.30">Formal Cotton Button-down Shirts - ~$5.40 / pc</option>
+                            <option value="activewear" data-unitprice="3.60" data-weight="0.20">Performance Activewear Sets - ~$3.60 / pc</option>
+                        </select>
+                    </div>
+
+                    <!-- Container Size -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-800 mb-2">2. Select Freight Container Volume</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="relative flex flex-col p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-navy-950 transition-all has-[:checked]:border-navy-950 has-[:checked]:bg-navy-50">
+                                <input type="radio" name="calcContainer" value="20ft" onchange="calculateContainerPrice()" class="sr-only" checked>
+                                <span class="font-bold text-navy-950 text-sm">20ft Container</span>
+                                <span class="text-xs text-slate-500 mt-1">~18,000 Pcs Cap</span>
+                            </label>
+                            <label class="relative flex flex-col p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-navy-950 transition-all has-[:checked]:border-navy-950 has-[:checked]:bg-navy-50">
+                                <input type="radio" name="calcContainer" value="40fthq" onchange="calculateContainerPrice()" class="sr-only">
+                                <span class="font-bold text-navy-950 text-sm">40ft High Cube</span>
+                                <span class="text-xs text-slate-500 mt-1">~42,000 Pcs Cap</span>
+                            </label>
+                            <label class="relative flex flex-col p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-navy-950 transition-all has-[:checked]:border-navy-950 has-[:checked]:bg-navy-50">
+                                <input type="radio" name="calcContainer" value="lcl" onchange="calculateContainerPrice()" class="sr-only">
+                                <span class="font-bold text-navy-950 text-sm">Half Container (LCL)</span>
+                                <span class="text-xs text-slate-500 mt-1">~5,000 Pcs MOQ</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Fabric Quality Grade & Customization -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-800 mb-2">Fabric Quality Grade</label>
+                            <select id="calcFabricGrade" onchange="calculateContainerPrice()" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                                <option value="1.0">Standard Commercial Export Grade</option>
+                                <option value="1.15">Premium Organic / OEKO-TEX Cert (+15%)</option>
+                                <option value="1.30">Luxury Supima / Heavy Blend (+30%)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-800 mb-2">Branding & Labeling</label>
+                            <select id="calcBranding" onchange="calculateContainerPrice()" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                                <option value="0">Unbranded / Blank Bulk Packing</option>
+                                <option value="0.25">Custom Neck Tags + Polybag (+ $0.25/pc)</option>
+                                <option value="0.50">Full Private Label & Custom Barcoding (+ $0.50/pc)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Destination -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-800 mb-2">Shipping Destination Port</label>
+                        <select id="calcDestination" onchange="calculateContainerPrice()" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            <option value="3200">North America (Los Angeles / New York Port) - ~$3,200 Freight</option>
+                            <option value="2800">Europe (Rotterdam / Hamburg Port) - ~$2,800 Freight</option>
+                            <option value="1800">Middle East (Jebel Ali / Dubai) - ~$1,800 Freight</option>
+                            <option value="1200">Domestic Freight (India Domestic Hub) - ~$1,200</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quotation Calculation Output Card -->
+                <div class="lg:col-span-5 navy-gradient text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-navy-800 sticky top-28">
+                    <div class="flex justify-between items-center pb-4 border-b border-navy-800">
+                        <span class="text-xs uppercase font-bold text-amber-400 tracking-wider"><i class="fa-solid fa-file-invoice-dollar mr-1"></i> Live Container Quote</span>
+                        <span id="quoteRefTag" class="text-xs font-mono bg-navy-800 text-slate-300 px-2 py-1 rounded">EST-2026-904</span>
+                    </div>
+
+                    <div class="my-6 space-y-4">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-300">Total Garment Units:</span>
+                            <span id="resTotalUnits" class="font-bold text-white text-base">18,000 Pcs</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-300">Base Cost Per Piece:</span>
+                            <span id="resUnitCost" class="font-bold text-white">$2.10 USD</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-300">Custom Branding / Addons:</span>
+                            <span id="resAddonCost" class="font-bold text-white">$0.00 USD</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-300">Ocean Freight & Port Logistics:</span>
+                            <span id="resFreightCost" class="font-bold text-white">$3,200.00 USD</span>
+                        </div>
+                        <div class="border-t border-navy-800 pt-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-xs text-amber-400 font-semibold block uppercase">Estimated Total CIF Price</span>
+                                <span id="resGrandTotal" class="text-3xl font-black text-white">$41,000.00</span>
+                            </div>
+                            <span class="text-xs text-slate-400 text-right">FOB / CIF Terms Applicable</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-navy-800/80 rounded-xl p-4 border border-navy-800 text-xs text-slate-300 space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-amber-400 font-semibold">
+                            <i class="fa-solid fa-circle-check"></i> Includes Export Quality Testing & Packaging
+                        </div>
+                        <p>Prices are subject to final fabric GSM verification and contract agreement. Official proforma invoice generated upon request.</p>
+                    </div>
+
+                    <button onclick="downloadQuoteSummary()" class="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-navy-950 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Save & Request Formal Quotation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 2: Sample Clothes Gallery & Catalog Viewer -->
+    <section id="catalog" class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-amber-600 font-bold text-sm uppercase tracking-wider">Feature #2: Mass Apparel Lines</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-950 mt-1">Sample Clothes & Fabric Lines</h2>
+                    <p class="text-slate-600 mt-2">Explore sample garments manufactured at our Ghaziabad facility for global wholesale shipment.</p>
+                </div>
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-2 mt-4 md:mt-0" id="catalogFilters">
+                    <button onclick="filterCatalog('all')" class="catalog-btn active bg-navy-950 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors">All Categories</button>
+                    <button onclick="filterCatalog('cotton')" class="catalog-btn bg-white hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-colors border border-slate-200">Cotton Tees</button>
+                    <button onclick="filterCatalog('denim')" class="catalog-btn bg-white hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-colors border border-slate-200">Denim & Workwear</button>
+                    <button onclick="filterCatalog('outerwear')" class="catalog-btn bg-white hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-colors border border-slate-200">Hoodies & Jackets</button>
+                </div>
+            </div>
+
+            <!-- Catalog Items Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="garmentGrid">
+                <!-- Item 1 -->
+                <div class="garment-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all" data-category="cotton">
+                    <div class="h-64 bg-slate-200 relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80" alt="Bulk Plain T-Shirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/00205b/ffffff?text=Scheldt+Cotton+Tees'">
+                        <span class="absolute top-3 left-3 bg-navy-950/90 text-amber-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">MOQ: 5,000 Pcs</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-slate-500 font-semibold uppercase">100% Combed Cotton</div>
+                        <h3 class="text-lg font-bold text-navy-950 mt-1">Export Premium Heavyweight Tee</h3>
+                        <p class="text-slate-600 text-xs mt-2 line-clamp-2">Bio-washed 180 GSM ring-spun cotton. Double-needle stitched sleeve & bottom hems.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Container Unit Price</span>
+                                <span class="text-base font-extrabold text-navy-950">$2.10 - $2.45 <span class="text-xs font-normal text-slate-500">/ pc</span></span>
+                            </div>
+                            <button onclick="openGarmentModal('Export Premium Heavyweight Tee', '100% Bio-washed Cotton', '180 GSM', '$2.10', '5,000 Pcs', 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80')" class="px-3 py-2 bg-navy-50 hover:bg-navy-100 text-navy-950 text-xs font-bold rounded-lg transition-colors">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="garment-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all" data-category="denim">
+                    <div class="h-64 bg-slate-200 relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1542272604-780c36856842?auto=format&fit=crop&w=800&q=80" alt="Bulk Denim Jeans" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/00205b/ffffff?text=Scheldt+Denim+Jeans'">
+                        <span class="absolute top-3 left-3 bg-navy-950/90 text-amber-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">MOQ: 2,500 Pcs</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-slate-500 font-semibold uppercase">Rigid Denim 13.5 oz</div>
+                        <h3 class="text-lg font-bold text-navy-950 mt-1">Classic Fit Bulk Men's Jeans</h3>
+                        <p class="text-slate-600 text-xs mt-2 line-clamp-2">Reinforced brass rivets, YKK zipper fly, enzyme stone wash finish. Industrial grade stitching.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Container Unit Price</span>
+                                <span class="text-base font-extrabold text-navy-950">$7.80 - $8.30 <span class="text-xs font-normal text-slate-500">/ pc</span></span>
+                            </div>
+                            <button onclick="openGarmentModal('Classic Fit Bulk Mens Jeans', '13.5 oz Rigid Cotton Denim', '400 GSM', '$7.80', '2,500 Pcs', 'https://images.unsplash.com/photo-1542272604-780c36856842?auto=format&fit=crop&w=800&q=80')" class="px-3 py-2 bg-navy-50 hover:bg-navy-100 text-navy-950 text-xs font-bold rounded-lg transition-colors">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="garment-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all" data-category="outerwear">
+                    <div class="h-64 bg-slate-200 relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="Bulk Pullover Hoodie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/00205b/ffffff?text=Scheldt+Heavy+Hoodies'">
+                        <span class="absolute top-3 left-3 bg-navy-950/90 text-amber-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">MOQ: 3,000 Pcs</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-slate-500 font-semibold uppercase">Cotton Fleece Blend</div>
+                        <h3 class="text-lg font-bold text-navy-950 mt-1">Heavy Fleece Pullover Hoodie</h3>
+                        <p class="text-slate-600 text-xs mt-2 line-clamp-2">320 GSM brushed inner fleece, double-lined hood, kangaroo front pocket. Pre-shrunk.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Container Unit Price</span>
+                                <span class="text-base font-extrabold text-navy-950">$8.50 - $9.20 <span class="text-xs font-normal text-slate-500">/ pc</span></span>
+                            </div>
+                            <button onclick="openGarmentModal('Heavy Fleece Pullover Hoodie', '80% Cotton 20% Poly Fleece', '320 GSM', '$8.50', '3,000 Pcs', 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80')" class="px-3 py-2 bg-navy-50 hover:bg-navy-100 text-navy-950 text-xs font-bold rounded-lg transition-colors">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="garment-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all" data-category="cotton">
+                    <div class="h-64 bg-slate-200 relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80" alt="Formal Cotton Shirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/00205b/ffffff?text=Scheldt+Formal+Shirts'">
+                        <span class="absolute top-3 left-3 bg-navy-950/90 text-amber-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">MOQ: 4,000 Pcs</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs text-slate-500 font-semibold uppercase">Poplin Cotton</div>
+                        <h3 class="text-lg font-bold text-navy-950 mt-1">Slim-Fit Formal Dress Shirt</h3>
+                        <p class="text-slate-600 text-xs mt-2 line-clamp-2">Wrinkle-resistant woven poplin cotton. Fused collar and adjustable cuff design.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Container Unit Price</span>
+                                <span class="text-base font-extrabold text-navy-950">$5.40 - $5.90 <span class="text-xs font-normal text-slate-500">/ pc</span></span>
+                            </div>
+                            <button onclick="openGarmentModal('Slim-Fit Formal Dress Shirt', '100% Woven Poplin Cotton', '140 GSM', '$5.40', '4,000 Pcs', 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80')" class="px-3 py-2 bg-navy-50 hover:bg-navy-100 text-navy-950 text-xs font-bold rounded-lg transition-colors">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 4: Interactive RFQ (Request for Quotation) & Custom Manufacturing Builder -->
+    <section id="rfq" class="py-16 bg-white border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-amber-600 font-bold text-sm uppercase tracking-wider">Feature #4: Custom Manufacturing</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-950">Bulk RFQ & Custom Garment Builder</h2>
+                    <p class="text-slate-600">Need custom techpack specs, custom pantone color dyeing, specialized GSM weights, or private branding tags? Send your detailed Request for Quotation directly to our manufacturing engineers at Ghaziabad.</p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-navy-50 text-navy-950 flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-navy-950 text-sm">Fabric & Techpack Specs</h4>
+                                <p class="text-xs text-slate-500">Select custom fiber blends, GSM weight parameters, and Pantone codes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-navy-50 text-navy-950 flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-navy-950 text-sm">Physical Swatch Dispatch</h4>
+                                <p class="text-xs text-slate-500">Receive courier swatch books before placing main container orders.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-navy-50 text-navy-950 flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-navy-950 text-sm">Guaranteed Export SLA</h4>
+                                <p class="text-xs text-slate-500">Official contract with strict quality inspection timelines.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RFQ Multi-step Interactive Form -->
+                <div class="lg:col-span-7 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md">
+                    <form id="rfqForm" onsubmit="submitRFQ(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company / Buyer Name *</label>
+                                <input type="text" id="rfqCompany" required placeholder="e.g. Apex Retail LLC" class="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Corporate Email *</label>
+                                <input type="email" id="rfqEmail" required placeholder="buyer@company.com" class="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Target Quantity (Pcs) *</label>
+                                <input type="number" id="rfqQty" min="1000" required placeholder="e.g. 20000" class="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Target Delivery Date</label>
+                                <input type="date" id="rfqDate" class="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Garment Line & Customization Details</label>
+                            <textarea id="rfqSpecs" rows="3" placeholder="Specify fabric composition (e.g. 100% Cotton 200 GSM), sizing ratio (S/M/L/XL), dyeing requirement, print/embroidery specifications..." class="w-full bg-white border border-slate-300 rounded-lg p-3.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none"></textarea>
+                        </div>
+
+                        <div class="p-3 bg-white border border-dashed border-slate-300 rounded-lg text-center">
+                            <i class="fa-solid fa-cloud-arrow-up text-slate-400 text-xl mb-1"></i>
+                            <div class="text-xs font-semibold text-slate-600">Simulate Techpack / Specs Upload (.pdf, .zip, .png)</div>
+                            <span class="text-[10px] text-slate-400">Max file size: 25MB</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-navy-950 hover:bg-navy-900 text-white font-bold rounded-xl shadow transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-amber-400"></i> Submit RFQ To Scheldt Engineering
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 5: Live Logistics & Container Tracking Simulator -->
+    <section id="tracking" class="py-16 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-400 font-bold text-sm uppercase tracking-wider">Feature #5: Supply Chain Visibility</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Live Shipment & Container Tracker</h2>
+                <p class="text-slate-400 mt-2">Enter your Scheldt container bill of lading or tracking ID to view live production & ocean freight status.</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="max-w-xl mx-auto mb-12">
+                <div class="flex gap-2 bg-slate-800 p-2 rounded-2xl border border-slate-700 shadow-xl">
+                    <input type="text" id="trackingInput" value="SCH-2026-8891" placeholder="Enter Container Tracking ID (e.g., SCH-2026-8891)" class="w-full bg-transparent px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none font-mono">
+                    <button onclick="simulateTrackingSearch()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-navy-950 font-bold rounded-xl transition-colors shrink-0 flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Track
+                    </button>
+                </div>
+                <p class="text-center text-xs text-slate-500 mt-2">Sample Tracking IDs: <button onclick="setTrackingSample('SCH-2026-8891')" class="text-amber-400 underline font-mono">SCH-2026-8891</button> or <button onclick="setTrackingSample('SCH-2026-4022')" class="text-amber-400 underline font-mono">SCH-2026-4022</button></p>
+            </div>
+
+            <!-- Tracking Milestones Display Card -->
+            <div id="trackingResultCard" class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl">
+                <div class="flex flex-wrap justify-between items-center pb-6 border-b border-slate-700 gap-4">
+                    <div>
+                        <span class="text-xs text-amber-400 font-bold uppercase tracking-wider block">Shipment Status: IN TRANSIT</span>
+                        <h3 id="trackContainerID" class="text-2xl font-black font-mono text-white">SCH-2026-8891</h3>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Destination Port</span>
+                        <span id="trackDestination" class="font-bold text-slate-200">Port of Rotterdam, EU</span>
+                    </div>
+                </div>
+
+                <!-- Timeline Milestones -->
+                <div class="mt-8 relative">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
+                        <!-- Step 1 -->
+                        <div class="flex md:flex-col items-center gap-3 text-left md:text-center">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-emerald-500/20">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Fabric Cutting</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Ghaziabad Hub</p>
+                                <span class="text-[9px] text-emerald-400 font-mono">Completed</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex md:flex-col items-center gap-3 text-left md:text-center">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-emerald-500/20">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Quality Inspection</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">ISO 9001 Approved</p>
+                                <span class="text-[9px] text-emerald-400 font-mono">Passed</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex md:flex-col items-center gap-3 text-left md:text-center">
+                            <div class="w-10 h-10 rounded-full bg-amber-500 text-navy-950 flex items-center justify-center font-bold text-sm shrink-0 shadow-lg shadow-amber-500/20 glow-effect">
+                                <i class="fa-solid fa-ship"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Ocean Transit</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Vessel MSC Julia</p>
+                                <span class="text-[9px] text-amber-400 font-mono">In Progress</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="flex md:flex-col items-center gap-3 text-left md:text-center opacity-50">
+                            <div class="w-10 h-10 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center font-bold text-sm shrink-0">
+                                <i class="fa-solid fa-anchor"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Customs Clearance</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Destination Port</p>
+                                <span class="text-[9px] text-slate-500 font-mono">Pending</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="flex md:flex-col items-center gap-3 text-left md:text-center opacity-50">
+                            <div class="w-10 h-10 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center font-bold text-sm shrink-0">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Final Delivery</h4>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Client Warehouse</p>
+                                <span class="text-[9px] text-slate-500 font-mono">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 6: FAQ Accordion & Instant Assistant -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-amber-600 font-bold text-sm uppercase tracking-wider">Feature #6: Wholesale Support</span>
+                <h2 class="text-3xl font-extrabold text-navy-950 mt-1">Frequently Asked Questions</h2>
+                <p class="text-slate-600 mt-1">Essential export terms, payment methods, and container shipping details.</p>
+            </div>
+
+            <div class="space-y-4" id="faqAccordion">
+                <!-- FAQ 1 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full p-5 text-left font-bold text-navy-950 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                        <span>What is the Minimum Order Quantity (MOQ) for container orders?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="p-5 text-sm text-slate-600 bg-white hidden border-t border-slate-200">
+                        Our standard MOQ for full container load (FCL) orders is 18,000 Pcs for 20ft containers and 42,000 Pcs for 40ft High Cube containers. For smaller trial orders, we support LCL (Less Than Container Load) starting at 2,500 - 5,000 units depending on garment style.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full p-5 text-left font-bold text-navy-950 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                        <span>What payment terms are accepted for international exports?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="p-5 text-sm text-slate-600 bg-white hidden border-t border-slate-200">
+                        We support 100% Irrevocable Letter of Credit (L/C at sight) from prime international banks, or Telegraphic Transfer (T/T with 30% advance deposit upon contract signing and 70% upon Bill of Lading emission).
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full p-5 text-left font-bold text-navy-950 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                        <span>Can we order physical fabric swatches and sample fits?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div class="p-5 text-sm text-slate-600 bg-white hidden border-t border-slate-200">
+                        Yes! Verified buyers can request physical fabric swatch books and pre-production sample fits dispatched via DHL / FedEx courier directly from our Ghaziabad production facility.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Contact & Map Footer Section (Including Exact Extracted Image Information) -->
+    <footer id="about" class="bg-navy-950 text-white py-16 border-t border-navy-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-12 border-b border-navy-800">
+                <!-- Company Bio & Logo -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-navy-950 font-black text-2xl">
+                            S
+                        </div>
+                        <span class="text-2xl font-black tracking-tight text-white">Scheldt <span class="text-xs font-semibold uppercase text-amber-400 border border-amber-400/30 px-1.5 py-0.5 rounded">Pvt. Ltd.</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-md">
+                        Scheldt Pvt. Ltd. is a registered Indian garment manufacturing and mass export enterprise specializing in high-volume containerized apparel shipments worldwide.
+                    </p>
+                    <div class="pt-2 text-xs text-amber-400 font-mono">
+                        <i class="fa-solid fa-file-contract mr-1"></i> CIN: U4912UW2026PTC255732
+                    </div>
+                </div>
+
+                <!-- Official Extracted Address & Details -->
+                <div class="lg:col-span-4 space-y-3">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400">Registered Office & Contact</h4>
+                    
+                    <div class="space-y-2 text-sm text-slate-300">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-amber-400 mt-1"></i>
+                            <div>
+                                <strong class="text-white block">Registered Address:</strong>
+                                House No. 521 Gali No. 11, New Krishna Nagar Bagu, Ghaziabad, Uttar Pradesh - 201009, India
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-amber-400"></i>
+                            <div>
+                                <strong class="text-white">Email:</strong>
+                                <a href="mailto:scheldt@outlook.in" class="hover:text-amber-400 transition-colors">scheldt@outlook.in</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-amber-400"></i>
+                            <div>
+                                <strong class="text-white">Mobile No.:</strong>
+                                <a href="tel:7065733586" class="hover:text-amber-400 transition-colors">+91 7065733586</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geolocation & Location Pin Card -->
+                <div class="lg:col-span-3 bg-navy-900 p-5 rounded-2xl border border-navy-800 text-xs text-slate-300">
+                    <div class="flex items-center gap-2 text-amber-400 font-bold mb-2">
+                        <i class="fa-solid fa-map-pin"></i> Ghaziabad Facility Hub
+                    </div>
+                    <div class="font-mono text-[11px] text-slate-400 space-y-1">
+                        <div>Plus Code: JCM9+Q72</div>
+                        <div>Biharipura, Bhim Nagar, Vijay Nagar, Ghaziabad, UP</div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-navy-800 flex justify-between items-center text-[10px] text-slate-500">
+                        <span>ISO Export Certified</span>
+                        <span class="text-emerald-400">● Operational Hub</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <div>
+                    &copy; 2026 Scheldt Pvt. Ltd. All Rights Reserved. Mass Garment Export Operations.
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-300">Export Terms</a>
+                    <a href="#" class="hover:text-slate-300">ISO Compliance</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: Authentication System Modal (Login / Register) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-navy-950 text-amber-400 rounded-xl flex items-center justify-center font-bold text-xl mx-auto mb-2">S</div>
+                <h3 id="authModalTitle" class="text-2xl font-black text-navy-950">Buyer Portal Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Access Scheldt wholesale pricing tier & saved RFQs</p>
+            </div>
+
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company / Buyer Name</label>
+                    <input type="text" id="authCompanyName" required placeholder="e.g. Global Garments Inc." class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Corporate Email</label>
+                    <input type="email" id="authEmail" required placeholder="purchasing@company.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password</label>
+                    <input type="password" required value="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-navy-950 focus:outline-none">
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-navy-950 hover:bg-navy-900 text-white font-bold rounded-xl shadow transition-colors">
+                    Sign In to Portal
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Garment Sample Swatch Details Modal -->
+    <div id="garmentModal" class="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative overflow-hidden">
+            <button onclick="closeGarmentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 z-10">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="h-64 sm:h-auto rounded-xl overflow-hidden bg-slate-100">
+                    <img id="modalImg" src="" alt="Garment Sample" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-4">
+                    <span class="text-xs uppercase font-extrabold text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-200">Export Garment Spec Sheet</span>
+                    <h3 id="modalTitle" class="text-xl font-bold text-navy-950">Garment Name</h3>
+                    
+                    <div class="space-y-2 text-xs text-slate-600 border-y border-slate-100 py-3">
+                        <div class="flex justify-between">
+                            <span class="font-semibold text-slate-500">Fabric Composition:</span>
+                            <span id="modalFabric" class="font-bold text-slate-800">100% Cotton</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-semibold text-slate-500">GSM Density Weight:</span>
+                            <span id="modalGSM" class="font-bold text-slate-800">180 GSM</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-semibold text-slate-500">Minimum Order (MOQ):</span>
+                            <span id="modalMOQ" class="font-bold text-slate-800">5,000 Pcs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-semibold text-slate-500">Est. Container Unit Cost:</span>
+                            <span id="modalPrice" class="font-bold text-emerald-600 text-sm">$2.10 / pc</span>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500">Manufactured under strict ISO 9001 garment export quality control in Ghaziabad, UP facility.</p>
+
+                    <button onclick="requestPhysicalSwatch()" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-navy-950 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-box-open"></i> Request Courier Swatch Swatch Sample
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-navy-950 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-amber-400/30 hidden flex items-center gap-3 transition-all transform translate-y-2">
+        <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+        <span id="toastMsg" class="text-xs font-semibold">Action completed successfully.</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- FEATURE 1: Interactive Bulk Container Price Calculator ---
+        function calculateContainerPrice() {
+            const garmentSelect = document.getElementById('calcGarmentType');
+            const selectedOption = garmentSelect.options[garmentSelect.selectedIndex];
+            
+            const baseUnitPrice = parseFloat(selectedOption.getAttribute('data-unitprice')) || 2.10;
+            
+            const containerType = document.querySelector('input[name="calcContainer"]:checked').value;
+            let units = 18000;
+            if (containerType === '40fthq') units = 42000;
+            if (containerType === 'lcl') units = 5000;
+
+            const fabricGradeMultiplier = parseFloat(document.getElementById('calcFabricGrade').value) || 1.0;
+            const brandingAddon = parseFloat(document.getElementById('calcBranding').value) || 0.0;
+            const freightCost = parseFloat(document.getElementById('calcDestination').value) || 3200;
+
+            // Unit economics formulas
+            const calculatedUnitPrice = (baseUnitPrice * fabricGradeMultiplier) + brandingAddon;
+            const subtotalGarments = calculatedUnitPrice * units;
+            const grandTotal = subtotalGarments + freightCost;
+
+            // Render Output
+            document.getElementById('resTotalUnits').textContent = units.toLocaleString() + ' Pcs';
+            document.getElementById('resUnitCost').textContent = '$' + calculatedUnitPrice.toFixed(2) + ' USD';
+            document.getElementById('resAddonCost').textContent = '$' + brandingAddon.toFixed(2) + ' USD / pc';
+            document.getElementById('resFreightCost').textContent = '$' + freightCost.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' USD';
+            document.getElementById('resGrandTotal').textContent = '$' + grandTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function downloadQuoteSummary() {
+            showToast("Quotation EST-2026-904 saved! Connecting with Scheldt export team.");
+        }
+
+        // --- FEATURE 2: Sample Clothes Gallery Filter ---
+        function filterCatalog(category) {
+            const cards = document.querySelectorAll('.garment-card');
+            const btns = document.querySelectorAll('.catalog-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('bg-navy-950', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+
+            event.target.classList.remove('bg-white', 'text-slate-700');
+            event.target.classList.add('bg-navy-950', 'text-white');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- Garment Details Modal Logic ---
+        function openGarmentModal(title, fabric, gsm, price, moq, imgSrc) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalFabric').textContent = fabric;
+            document.getElementById('modalGSM').textContent = gsm;
+            document.getElementById('modalPrice').textContent = price + ' / pc';
+            document.getElementById('modalMOQ').textContent = moq;
+            document.getElementById('modalImg').src = imgSrc;
+            
+            document.getElementById('garmentModal').classList.remove('hidden');
+        }
+
+        function closeGarmentModal() {
+            document.getElementById('garmentModal').classList.add('hidden');
+        }
+
+        function requestPhysicalSwatch() {
+            closeGarmentModal();
+            showToast("Swatch sample request logged! Courier dispatch to your corporate address.");
+        }
+
+        // --- FEATURE 3: Buyer Authentication Simulation ---
+        let currentAuthMode = 'login';
+
+        function openAuthModal(mode) {
+            currentAuthMode = mode;
+            const titleEl = document.getElementById('authModalTitle');
+            const btnEl = document.getElementById('authSubmitBtn');
+
+            if (mode === 'login') {
+                titleEl.textContent = 'Buyer Portal Login';
+                btnEl.textContent = 'Sign In to Portal';
+            } else {
+                titleEl.textContent = 'Register Buyer Account';
+                btnEl.textContent = 'Create Corporate Account';
+            }
+
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const companyName = document.getElementById('authCompanyName').value;
+            
+            document.getElementById('userNameDisplay').textContent = companyName;
+            document.getElementById('userTierDisplay').textContent = 'Tier-1 Bulk VIP Buyer';
+
+            document.getElementById('loggedOutState').classList.add('hidden');
+            document.getElementById('loggedInState').classList.remove('hidden');
+
+            closeAuthModal();
+            showToast("Welcome back, " + companyName + "! Buyer Portal active.");
+        }
+
+        function logoutUser() {
+            document.getElementById('loggedOutState').classList.remove('hidden');
+            document.getElementById('loggedInState').classList.add('hidden');
+            showToast("Logged out of Scheldt Buyer Portal.");
+        }
+
+        // --- FEATURE 4: RFQ Submission Form ---
+        function submitRFQ(e) {
+            e.preventDefault();
+            const company = document.getElementById('rfqCompany').value;
+            showToast("RFQ successfully sent to Scheldt Ghaziabad HQ for " + company + "!");
+            document.getElementById('rfqForm').reset();
+        }
+
+        // --- FEATURE 5: Container Shipment Tracking Simulator ---
+        function simulateTrackingSearch() {
+            const inputVal = document.getElementById('trackingInput').value.trim();
+            if (!inputVal) return;
+
+            document.getElementById('trackContainerID').textContent = inputVal.toUpperCase();
+            showToast("Retrieved live tracking coordinates for container " + inputVal);
+        }
+
+        function setTrackingSample(sampleId) {
+            document.getElementById('trackingInput').value = sampleId;
+            simulateTrackingSearch();
+        }
+
+        // --- FEATURE 6: FAQ Accordion Toggle ---
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Utility Toast Helper ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = message;
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Initialize Price Calculation on Load
+        window.onload = function() {
+            calculateContainerPrice();
+        };
+    </script>
+</body>
+</html>
