@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Daily Streak & Practice Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gh: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            header: '#161b22',
+                            accent: '#238636',
+                            accentHover: '#2ea043',
+                            blue: '#58a6ff',
+                            purple: '#bc8cff',
+                            orange: '#d29922',
+                            red: '#f85149',
+                            text: '#c9d1d9',
+                            subtext: '#8b949e',
+                            L0: '#161b22',
+                            L1: '#0e4429',
+                            L2: '#006d32',
+                            L3: '#26a641',
+                            L4: '#39d353'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b949e;
+        }
+        .contribution-cell {
+            transition: all 0.2s ease;
+        }
+        .contribution-cell:hover {
+            transform: scale(1.2);
+            z-index: 10;
+            outline: 1px solid #58a6ff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Header Navigation -->
+    <header class="bg-gh-card border-b border-gh-border px-4 py-3 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fa-brands fa-github text-3xl text-white"></i>
+                <span class="font-semibold text-lg text-white code-font">DailyStreak<span class="text-gh-blue">.hub</span></span>
+                <span class="text-xs px-2 py-0.5 rounded-full bg-gh-border text-gh-subtext font-mono border border-gray-700">v2.4.0</span>
+            </div>
+            
+            <div class="flex items-center space-x-4 text-sm">
+                <div class="flex items-center bg-gh-bg border border-gh-border px-3 py-1 rounded-md text-gh-orange">
+                    <i class="fa-solid fa-fire mr-1.5 animate-pulse"></i>
+                    <span class="font-bold mr-1" id="navStreakCount">0</span> Day Streak
+                </div>
+                <div class="hidden sm:flex items-center bg-gh-bg border border-gh-border px-3 py-1 rounded-md text-gh-blue">
+                    <i class="fa-solid fa-code-commit mr-1.5"></i>
+                    <span class="font-bold mr-1" id="navTotalCommits">0</span> Total Commits
+                </div>
+                <button onclick="resetAllData()" title="Reset All Data" class="text-gh-subtext hover:text-gh-red transition px-2 py-1">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6 flex-grow">
+
+        <!-- Top Row: Overview Heatmap & Streak Cards -->
+        <section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Heatmap Box (3 Cols) -->
+            <div class="lg:col-span-3 bg-gh-card border border-gh-border rounded-lg p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gh-subtext flex items-center">
+                        <i class="fa-regular fa-calendar-days mr-2 text-gh-blue"></i> Daily Activity Heatmap (Last 16 Weeks)
+                    </h2>
+                    <span class="text-xs text-gh-subtext">Click any day to simulate commit</span>
+                </div>
+
+                <!-- Heatmap Container -->
+                <div class="overflow-x-auto pb-2">
+                    <div id="heatmapGrid" class="inline-grid grid-rows-7 grid-flow-col gap-1.5 p-1">
+                        <!-- Javascript auto-populates cells -->
+                    </div>
+                </div>
+
+                <!-- Heatmap Legend -->
+                <div class="flex items-center justify-end space-x-2 text-xs text-gh-subtext mt-3">
+                    <span>Less</span>
+                    <span class="w-3 h-3 rounded-sm bg-gh-L0 border border-gh-border inline-block"></span>
+                    <span class="w-3 h-3 rounded-sm bg-gh-L1 inline-block"></span>
+                    <span class="w-3 h-3 rounded-sm bg-gh-L2 inline-block"></span>
+                    <span class="w-3 h-3 rounded-sm bg-gh-L3 inline-block"></span>
+                    <span class="w-3 h-3 rounded-sm bg-gh-L4 inline-block"></span>
+                    <span>More</span>
+                </div>
+            </div>
+
+            <!-- Stats Overview (1 Col) -->
+            <div class="bg-gh-card border border-gh-border rounded-lg p-5 flex flex-col justify-between shadow-lg">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-gh-subtext flex items-center mb-4">
+                    <i class="fa-solid fa-chart-line mr-2 text-gh-purple"></i> Practice Stats
+                </h2>
+                
+                <div class="space-y-4 my-auto">
+                    <div class="bg-gh-bg p-3 rounded-md border border-gh-border">
+                        <div class="text-xs text-gh-subtext">Current Active Streak</div>
+                        <div class="text-3xl font-bold text-white flex items-center mt-1">
+                            <span id="statCurrentStreak">0</span>
+                            <span class="text-xs font-normal text-gh-subtext ml-2">days</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-3 rounded-md border border-gh-border">
+                        <div class="text-xs text-gh-subtext">Quizzes Solved</div>
+                        <div class="text-2xl font-bold text-white flex items-center mt-1">
+                            <span id="statQuizzesCompleted">0</span>
+                            <span class="text-xs font-normal text-gh-subtext ml-2">passed</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-3 rounded-md border border-gh-border">
+                        <div class="text-xs text-gh-subtext">Quiz Accuracy</div>
+                        <div class="text-2xl font-bold text-gh-L4 flex items-center mt-1">
+                            <span id="statQuizAccuracy">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="logQuickCommit()" class="mt-4 w-full py-2.5 bg-gh-accent hover:bg-gh-accentHover text-white text-sm font-semibold rounded-md transition duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Log Daily Activity (+1 Commit)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs for Hub Features -->
+        <div class="border-b border-gh-border flex space-x-6 text-sm font-medium">
+            <button id="tabBtnGenerator" onclick="switchTab('generator')" class="pb-3 border-b-2 border-gh-blue text-white flex items-center space-x-2">
+                <i class="fa-solid fa-code"></i>
+                <span>Markdown Log & Commit Generator</span>
+            </button>
+            <button id="tabBtnQuiz" onclick="switchTab('quiz')" class="pb-3 border-b-2 border-transparent text-gh-subtext hover:text-white flex items-center space-x-2">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Practice Quiz Hub</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: MARKDOWN LOG & COMMIT GENERATOR -->
+        <section id="tabGenerator" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Form Inputs -->
+            <div class="bg-gh-card border border-gh-border rounded-lg p-5 space-y-4">
+                <h3 class="text-md font-semibold text-white flex items-center">
+                    <i class="fa-solid fa-pen-to-square mr-2 text-gh-orange"></i> Log Details
+                </h3>
+
+                <div>
+                    <label class="block text-xs font-medium text-gh-subtext mb-1">Log Date</label>
+                    <input type="date" id="logDate" class="w-full bg-gh-bg border border-gh-border rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gh-blue code-font">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gh-subtext mb-1">Commit Type</label>
+                    <select id="logType" onchange="updateGeneratedContent()" class="w-full bg-gh-bg border border-gh-border rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gh-blue">
+                        <option value="feat">feat: New Feature / Practice Module</option>
+                        <option value="fix">fix: Bug Fix / Code Refactoring</option>
+                        <option value="docs">docs: Documentation / Notes Update</option>
+                        <option value="solve">solve: LeetCode / DSA Problem</option>
+                        <option value="refactor">refactor: Optimizing Code Efficiency</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gh-subtext mb-1">Topic / Title</label>
+                    <input type="text" id="logTopic" value="Binary Search Trees & Git Branching" oninput="updateGeneratedContent()" placeholder="e.g., Implementing Linked Lists" class="w-full bg-gh-bg border border-gh-border rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gh-blue">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gh-subtext mb-1">Key Learnings / Summary</label>
+                    <textarea id="logSummary" rows="3" oninput="updateGeneratedContent()" placeholder="- Learned how balance factor works in AVL trees&#10;- Practiced git rebase interactive" class="w-full bg-gh-bg border border-gh-border rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gh-blue text-sm">- Understood time complexity of search operations&#10;- Solved 2 practice problems on tree traversal&#10;- Created standard commit templates</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gh-subtext mb-1">Time Spent (Hours)</label>
+                    <input type="number" id="logHours" value="1.5" step="0.5" min="0.5" oninput="updateGeneratedContent()" class="w-full bg-gh-bg border border-gh-border rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-gh-blue">
+                </div>
+            </div>
+
+            <!-- Previews & Copy Controls -->
+            <div class="bg-gh-card border border-gh-border rounded-lg p-5 space-y-4 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-md font-semibold text-white flex items-center">
+                            <i class="fa-solid fa-terminal mr-2 text-gh-blue"></i> Generated Commit Command
+                        </h3>
+                        <button onclick="copyToClipboard('generatedCommit')" class="text-xs bg-gh-bg hover:bg-gh-border border border-gh-border text-gh-text px-2.5 py-1 rounded transition">
+                            <i class="fa-regular fa-copy mr-1"></i> Copy Command
+                        </button>
+                    </div>
+                    <div class="bg-gh-bg border border-gh-border rounded-md p-3 code-font text-xs text-gh-L4 break-all select-all" id="generatedCommit">
+                        git commit -m "docs: Binary Search Trees & Git Branching"
+                    </div>
+                </div>
+
+                <div class="flex-grow flex flex-col mt-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-md font-semibold text-white flex items-center">
+                            <i class="fa-regular fa-file-code mr-2 text-gh-purple"></i> Markdown Daily Log Entry
+                        </h3>
+                        <div class="flex space-x-2">
+                            <button onclick="copyToClipboard('generatedMD')" class="text-xs bg-gh-bg hover:bg-gh-border border border-gh-border text-gh-text px-2.5 py-1 rounded transition">
+                                <i class="fa-regular fa-copy mr-1"></i> Copy MD
+                            </button>
+                            <button onclick="downloadMarkdownLog()" class="text-xs bg-gh-border hover:bg-gray-700 text-white px-2.5 py-1 rounded transition">
+                                <i class="fa-solid fa-download mr-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="generatedMD" readonly class="w-full flex-grow bg-gh-bg border border-gh-border rounded-md p-3 code-font text-xs text-gh-text resize-none focus:outline-none min-h-[180px]"></textarea>
+                </div>
+
+                <button onclick="logCommitAndMarkdown()" class="w-full py-2.5 bg-gh-accent hover:bg-gh-accentHover text-white text-sm font-semibold rounded-md transition duration-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Record Activity & Increment Streak</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- TAB 2: INTERACTIVE PRACTICE QUIZ HUB -->
+        <section id="tabQuiz" class="hidden space-y-6">
+            <!-- Quiz Selection & Header Controls -->
+            <div id="quizSelection" class="bg-gh-card border border-gh-border rounded-lg p-6 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gh-border pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Daily Coding Practice Quiz</h3>
+                        <p class="text-xs text-gh-subtext">Test your concepts, keep your streak alive, and export results directly into your repo notes.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <label class="text-xs text-gh-subtext">Category:</label>
+                        <select id="quizCategorySelect" class="bg-gh-bg border border-gh-border rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-gh-blue">
+                            <option value="git">Git Commands & Workflow</option>
+                            <option value="c">C Programming</option>
+                            <option value="java">Java OOP & Syntax</option>
+                            <option value="web">Web Dev (HTML/CSS/JS)</option>
+                            <option value="dsa">Data Structures & Algorithms</option>
+                        </select>
+                        <button onclick="startQuiz()" class="px-4 py-1.5 bg-gh-accent hover:bg-gh-accentHover text-white text-sm font-semibold rounded-md transition">
+                            Start Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Category Info Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gh-bg p-4 rounded-lg border border-gh-border hover:border-gh-blue transition cursor-pointer" onclick="quickSelectCategory('git')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-brands fa-git-alt text-3xl text-gh-orange"></i>
+                            <div>
+                                <div class="font-semibold text-white">Git Commands</div>
+                                <div class="text-xs text-gh-subtext">Branches, rebase, cherry-pick, remote setup</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-4 rounded-lg border border-gh-border hover:border-gh-blue transition cursor-pointer" onclick="quickSelectCategory('c')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-c text-3xl text-gh-blue"></i>
+                            <div>
+                                <div class="font-semibold text-white">C Programming</div>
+                                <div class="text-xs text-gh-subtext">Pointers, memory management, structs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-4 rounded-lg border border-gh-border hover:border-gh-blue transition cursor-pointer" onclick="quickSelectCategory('java')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-brands fa-java text-3xl text-gh-red"></i>
+                            <div>
+                                <div class="font-semibold text-white">Java</div>
+                                <div class="text-xs text-gh-subtext">OOP, JVM, Collections, Threads</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-4 rounded-lg border border-gh-border hover:border-gh-blue transition cursor-pointer" onclick="quickSelectCategory('web')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-brands fa-js text-3xl text-yellow-400"></i>
+                            <div>
+                                <div class="font-semibold text-white">Web Development</div>
+                                <div class="text-xs text-gh-subtext">DOM, Async JS, CSS Flex/Grid, HTML5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gh-bg p-4 rounded-lg border border-gh-border hover:border-gh-blue transition cursor-pointer" onclick="quickSelectCategory('dsa')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-diagram-project text-3xl text-gh-purple"></i>
+                            <div>
+                                <div class="font-semibold text-white">Data Structures</div>
+                                <div class="text-xs text-gh-subtext">Trees, Graphs, Sorting, Time Complexity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Active Interface (Hidden initial) -->
+            <div id="quizActive" class="hidden bg-gh-card border border-gh-border rounded-lg p-6 space-y-6">
+                <!-- Progress Header -->
+                <div class="flex items-center justify-between text-xs text-gh-subtext border-b border-gh-border pb-3">
+                    <span id="quizCategoryTitle" class="font-bold text-white uppercase tracking-wider">GIT COMMANDS</span>
+                    <div class="flex items-center space-x-4">
+                        <span>Question <span id="quizCurrentIndex" class="text-white font-bold">1</span> / <span id="quizTotalQuestions">5</span></span>
+                        <div class="flex items-center text-gh-orange">
+                            <i class="fa-regular fa-clock mr-1"></i>
+                            <span id="quizTimer" class="font-mono font-bold">00:30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <div>
+                    <h3 id="quizQuestionText" class="text-base sm:text-lg font-medium text-white mb-3">
+                        Loading Question...
+                    </h3>
+                    
+                    <!-- Code Snippet Container (if available) -->
+                    <pre id="quizCodeSnippet" class="hidden bg-gh-bg border border-gh-border p-3 rounded-md code-font text-xs text-gh-text overflow-x-auto mb-4"></pre>
+                </div>
+
+                <!-- Answer Choices -->
+                <div id="quizOptionsContainer" class="space-y-2.5">
+                    <!-- Dynamic rendering -->
+                </div>
+
+                <!-- Explanation Box (shown after answer) -->
+                <div id="quizExplanation" class="hidden bg-gh-bg border border-gh-blue p-4 rounded-md text-xs space-y-1">
+                    <div class="font-bold text-gh-blue flex items-center">
+                        <i class="fa-solid fa-circle-info mr-1.5"></i> Explanation
+                    </div>
+                    <div id="quizExplanationText" class="text-gh-text"></div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center pt-2">
+                    <button onclick="quitQuiz()" class="text-xs text-gh-subtext hover:text-gh-red transition">
+                        Quit Session
+                    </button>
+                    <button id="quizNextBtn" onclick="nextQuestion()" disabled class="px-5 py-2 bg-gh-accent opacity-50 cursor-not-allowed text-white text-sm font-semibold rounded-md transition">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Result View (Hidden initial) -->
+            <div id="quizResult" class="hidden bg-gh-card border border-gh-border rounded-lg p-6 space-y-6 text-center">
+                <div class="max-w-md mx-auto space-y-3">
+                    <div class="w-16 h-16 bg-gh-bg border border-gh-accent text-gh-L4 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Quiz Completed!</h3>
+                    <p class="text-xs text-gh-subtext">Great job maintaining your learning momentum today.</p>
+
+                    <div class="bg-gh-bg border border-gh-border rounded-lg p-4 grid grid-cols-2 gap-4 text-center my-4">
+                        <div>
+                            <div class="text-xs text-gh-subtext">Score</div>
+                            <div class="text-2xl font-bold text-white"><span id="resultScore">0</span> / <span id="resultTotal">5</span></div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gh-subtext">Percentage</div>
+                            <div class="text-2xl font-bold text-gh-L4"><span id="resultPercent">0%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="exportQuizToMD()" class="flex-1 py-2 bg-gh-accent hover:bg-gh-accentHover text-white text-xs font-semibold rounded-md transition flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-file-export mr-1"></i>
+                            <span>Export Quiz Log (MD)</span>
+                        </button>
+                        <button onclick="resetQuizView()" class="flex-1 py-2 bg-gh-bg hover:bg-gh-border border border-gh-border text-white text-xs font-semibold rounded-md transition">
+                            Take Another Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gh-border bg-gh-card py-4 text-center text-xs text-gh-subtext mt-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <span>GitHub Daily Streak & Practice Generator &copy; 2026</span>
+            </div>
+            <div class="flex space-x-4 code-font">
+                <span class="hover:text-gh-text cursor-pointer"><i class="fa-solid fa-terminal mr-1"></i>Ready for GitHub</span>
+                <span class="hover:text-gh-text cursor-pointer"><i class="fa-solid fa-shield-halved mr-1"></i>Offline Storage</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gh-card border border-gh-blue text-white text-xs px-4 py-3 rounded-md shadow-2xl transition transform translate-y-20 opacity-0 flex items-center space-x-2 z-50">
+        <i class="fa-solid fa-circle-check text-gh-blue"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // -------------------------------------------------------------
+        // STATE MANAGEMENT & LOCAL STORAGE
+        // -------------------------------------------------------------
+        const STORAGE_KEY = 'gh_daily_tracker_data_v2';
+        
+        let appState = {
+            streak: 0,
+            totalCommits: 0,
+            quizzesCompleted: 0,
+            totalQuestionsAnswered: 0,
+            correctQuestionsAnswered: 0,
+            commitsHistory: {} // Format: { "YYYY-MM-DD": count }
+        };
+
+        // Quiz Questions Data Bank
+        const quizBank = {
+            git: [
+                {
+                    q: "Which command stage changes for commit without staging untracked files?",
+                    code: "git add -u",
+                    options: ["git add .", "git add -u", "git add -A", "git commit -a"],
+                    answer: 1,
+                    explanation: "git add -u (or --update) stages modified and deleted files, but leaves new untracked files unstaged."
+                },
+                {
+                    q: "What does 'git rebase main' do when executed on a feature branch?",
+                    options: [
+                        "Merges main into feature with a merge commit",
+                        "Applies feature branch commits on top of main's tip",
+                        "Deletes the main branch",
+                        "Reverts feature branch to origin state"
+                    ],
+                    answer: 1,
+                    explanation: "Rebasing re-applies your feature commits on top of the tip of target branch (main), creating a linear history."
+                },
+                {
+                    q: "How do you temporarily stash uncommitted changes including untracked files?",
+                    options: ["git stash", "git stash --include-untracked", "git save -all", "git stash pop"],
+                    answer: 1,
+                    explanation: "Standard 'git stash' ignores untracked files unless '--include-untracked' or '-u' flag is passed."
+                }
+            ],
+            c: [
+                {
+                    q: "What is the output of printf('%d', sizeof(char)) on standard architectures?",
+                    options: ["1", "2", "4", "8"],
+                    answer: 0,
+                    explanation: "In C specification, sizeof(char) is defined to always be exactly 1 byte."
+                },
+                {
+                    q: "Which function dynamically allocates memory without clearing it to zero?",
+                    options: ["calloc()", "malloc()", "realloc()", "free()"],
+                    answer: 1,
+                    explanation: "malloc() allocates specified memory bytes but leaves memory uninitialized (garbage values). calloc() initializes memory to 0."
+                }
+            ],
+            java: [
+                {
+                    q: "Which keyword prevents a class from being subclassed in Java?",
+                    options: ["static", "abstract", "final", "super"],
+                    answer: 2,
+                    explanation: "Marking a class as 'final' in Java prevents other classes from extending/inheriting it."
+                },
+                {
+                    q: "What is the memory location where Java objects are allocated?",
+                    options: ["Stack Memory", "Heap Memory", "Register", "PermGen"],
+                    answer: 1,
+                    explanation: "In Java JVM architecture, all class instances and arrays are allocated on the Heap."
+                }
+            ],
+            web: [
+                {
+                    q: "Which HTTP status code represents '200'?",
+                    options: ["Not Found", "Created", "OK", "Bad Request"],
+                    answer: 2,
+                    explanation: "200 OK is the standard response for successful HTTP requests."
+                },
+                {
+                    q: "What is the result of typeof NaN in JavaScript?",
+                    options: ["'number'", "'nan'", "'undefined'", "'object'"],
+                    answer: 0,
+                    explanation: "In JS, NaN (Not-A-Number) is technically classified as a numeric type: typeof NaN === 'number'."
+                }
+            ],
+            dsa: [
+                {
+                    q: "What is the average time complexity of searching in a balanced Binary Search Tree (BST)?",
+                    options: ["O(1)", "O(n)", "O(log n)", "O(n log n)"],
+                    answer: 2,
+                    explanation: "In a balanced BST, height is log2(n), making search operations O(log n)."
+                },
+                {
+                    q: "Which data structure follows the LIFO (Last In First Out) principle?",
+                    options: ["Queue", "Stack", "LinkedList", "Heap"],
+                    answer: 1,
+                    explanation: "A Stack processes elements in Last In First Out order."
+                }
+            ]
+        };
+
+        // Active Quiz State
+        let currentQuiz = {
+            category: 'git',
+            questions: [],
+            currentIndex: 0,
+            score: 0,
+            timer: null,
+            timeRemaining: 30
+        };
+
+        // -------------------------------------------------------------
+        // INITIALIZATION
+        // -------------------------------------------------------------
+        window.onload = function() {
+            loadState();
+            setupDatePicker();
+            renderHeatmap();
+            updateGeneratedContent();
+            updateUIStats();
+        };
+
+        function setupDatePicker() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('logDate').value = today;
+        }
+
+        function loadState() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    appState = JSON.parse(stored);
+                } catch(e) {
+                    console.error("Failed to parse storage", e);
+                }
+            } else {
+                // Pre-fill dummy data for visual heatmap demonstration
+                const today = new Date();
+                for (let i = 0; i < 20; i++) {
+                    const d = new Date();
+                    d.setDate(today.getDate() - Math.floor(Math.random() * 60));
+                    const key = d.toISOString().split('T')[0];
+                    appState.commitsHistory[key] = Math.floor(Math.random() * 5) + 1;
+                }
+                appState.totalCommits = Object.values(appState.commitsHistory).reduce((a, b) => a + b, 0);
+                appState.streak = 3;
+                saveState();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            updateUIStats();
+        }
+
+        function updateUIStats() {
+            document.getElementById('navStreakCount').innerText = appState.streak;
+            document.getElementById('navTotalCommits').innerText = appState.totalCommits;
+            document.getElementById('statCurrentStreak').innerText = appState.streak;
+            document.getElementById('statQuizzesCompleted').innerText = appState.quizzesCompleted;
+
+            const accuracy = appState.totalQuestionsAnswered > 0 
+                ? Math.round((appState.correctQuestionsAnswered / appState.totalQuestionsAnswered) * 100) 
+                : 0;
+            document.getElementById('statQuizAccuracy').innerText = accuracy + '%';
+        }
+
+        // -------------------------------------------------------------
+        // HEATMAP SIMULATION
+        // -------------------------------------------------------------
+        function renderHeatmap() {
+            const grid = document.getElementById('heatmapGrid');
+            grid.innerHTML = '';
+
+            const totalWeeks = 16;
+            const daysInWeek = 7;
+            const today = new Date();
+            
+            // Calculate start date (16 weeks ago from current Sunday)
+            const startDate = new Date();
+            startDate.setDate(today.getDate() - (totalWeeks * 7));
+
+            for (let i = 0; i < totalWeeks * daysInWeek; i++) {
+                const currentDate = new Date(startDate);
+                currentDate.setDate(startDate.getDate() + i);
+                const dateKey = currentDate.toISOString().split('T')[0];
+                
+                const count = appState.commitsHistory[dateKey] || 0;
+                
+                const cell = document.createElement('div');
+                cell.className = 'w-3 h-3 rounded-sm cursor-pointer contribution-cell ';
+                
+                // Color levels
+                if (count === 0) cell.className += 'bg-gh-L0 border border-gh-border';
+                else if (count === 1) cell.className += 'bg-gh-L1';
+                else if (count <= 3) cell.className += 'bg-gh-L2';
+                else if (count <= 5) cell.className += 'bg-gh-L3';
+                else cell.className += 'bg-gh-L4';
+
+                cell.title = `${dateKey}: ${count} contribution(s)`;
+                cell.onclick = () => simulateDayCommit(dateKey);
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function simulateDayCommit(dateKey) {
+            appState.commitsHistory[dateKey] = (appState.commitsHistory[dateKey] || 0) + 1;
+            appState.totalCommits++;
+            saveState();
+            renderHeatmap();
+            showToast(`Added commit for ${dateKey}`);
+        }
+
+        function logQuickCommit() {
+            const todayKey = new Date().toISOString().split('T')[0];
+            appState.commitsHistory[todayKey] = (appState.commitsHistory[todayKey] || 0) + 1;
+            appState.totalCommits++;
+            appState.streak++;
+            saveState();
+            renderHeatmap();
+            showToast("Logged activity for today! Streak updated.");
+        }
+
+        // -------------------------------------------------------------
+        // GENERATOR TAB LOGIC
+        // -------------------------------------------------------------
+        function updateGeneratedContent() {
+            const type = document.getElementById('logType').value;
+            const topic = document.getElementById('logTopic').value || 'Daily Practice';
+            const summary = document.getElementById('logSummary').value || '';
+            const hours = document.getElementById('logHours').value || '1';
+            const date = document.getElementById('logDate').value || new Date().toISOString().split('T')[0];
+
+            // Generated Commit Command
+            const commitMsg = `${type}: ${topic.toLowerCase()}`;
+            document.getElementById('generatedCommit').innerText = `git commit -m "${commitMsg}"`;
+
+            // Formatted Markdown Template
+            const md = `# 📅 Daily Practice Log - ${date}\n\n` +
+                `## 📌 Topic: ${topic}\n` +
+                `- **Type:** \`${type}\`\n` +
+                `- **Time Spent:** ${hours} hrs\n` +
+                `- **Status:** Completed ✅\n\n` +
+                `### 📝 Key Learnings & Notes\n` +
+                `${summary.split('\n').map(line => line.startsWith('-') ? line : `- ${line}`).join('\n')}\n\n` +
+                `---\n*Logged via GitHub Daily Streak & Practice Dashboard*`;
+
+            document.getElementById('generatedMD').value = md;
+        }
+
+        function logCommitAndMarkdown() {
+            logQuickCommit();
+            showToast("Markdown log generated & streak updated!");
+        }
+
+        function downloadMarkdownLog() {
+            const date = document.getElementById('logDate').value || 'log';
+            const text = document.getElementById('generatedMD').value;
+            const blob = new Blob([text], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${date}-log.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("Downloaded markdown file!");
+        }
+
+        // -------------------------------------------------------------
+        // QUIZ HUB LOGIC
+        // -------------------------------------------------------------
+        function switchTab(tabName) {
+            const genTab = document.getElementById('tabGenerator');
+            const quizTab = document.getElementById('tabQuiz');
+            const genBtn = document.getElementById('tabBtnGenerator');
+            const quizBtn = document.getElementById('tabBtnQuiz');
+
+            if (tabName === 'generator') {
+                genTab.classList.remove('hidden');
+                quizTab.classList.add('hidden');
+                genBtn.className = "pb-3 border-b-2 border-gh-blue text-white flex items-center space-x-2";
+                quizBtn.className = "pb-3 border-b-2 border-transparent text-gh-subtext hover:text-white flex items-center space-x-2";
+            } else {
+                genTab.classList.add('hidden');
+                quizTab.classList.remove('hidden');
+                quizBtn.className = "pb-3 border-b-2 border-gh-blue text-white flex items-center space-x-2";
+                genBtn.className = "pb-3 border-b-2 border-transparent text-gh-subtext hover:text-white flex items-center space-x-2";
+            }
+        }
+
+        function quickSelectCategory(cat) {
+            document.getElementById('quizCategorySelect').value = cat;
+            startQuiz();
+        }
+
+        function startQuiz() {
+            const category = document.getElementById('quizCategorySelect').value;
+            const rawQuestions = quizBank[category] || quizBank['git'];
+            
+            currentQuiz = {
+                category: category,
+                questions: [...rawQuestions],
+                currentIndex: 0,
+                score: 0,
+                timer: null,
+                timeRemaining: 30
+            };
+
+            document.getElementById('quizSelection').classList.add('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizActive').classList.remove('hidden');
+
+            document.getElementById('quizCategoryTitle').innerText = `${category.toUpperCase()} PRACTICE`;
+            document.getElementById('quizTotalQuestions').innerText = currentQuiz.questions.length;
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(currentQuiz.timer);
+            currentQuiz.timeRemaining = 30;
+            updateTimerDisplay();
+
+            const q = currentQuiz.questions[currentQuiz.currentIndex];
+            document.getElementById('quizCurrentIndex').innerText = currentQuiz.currentIndex + 1;
+            document.getElementById('quizQuestionText').innerText = q.q;
+
+            // Handle optional Code snippet
+            const snippetElem = document.getElementById('quizCodeSnippet');
+            if (q.code) {
+                snippetElem.innerText = q.code;
+                snippetElem.classList.remove('hidden');
+            } else {
+                snippetElem.classList.add('hidden');
+            }
+
+            // Hide explanation & disable next button initially
+            document.getElementById('quizExplanation').classList.add('hidden');
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.disabled = true;
+            nextBtn.className = "px-5 py-2 bg-gh-accent opacity-50 cursor-not-allowed text-white text-sm font-semibold rounded-md transition";
+
+            // Render Options
+            const container = document.getElementById('quizOptionsContainer');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 rounded-md bg-gh-bg border border-gh-border hover:border-gh-blue text-sm text-gh-text transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span><i class="fa-regular fa-circle text-gh-subtext"></i>`;
+                btn.onclick = () => selectOption(idx);
+                container.appendChild(btn);
+            });
+
+            // Start Timer
+            currentQuiz.timer = setInterval(() => {
+                currentQuiz.timeRemaining--;
+                updateTimerDisplay();
+                if (currentQuiz.timeRemaining <= 0) {
+                    clearInterval(currentQuiz.timer);
+                    selectOption(-1); // Time out
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const sec = currentQuiz.timeRemaining < 10 ? `0${currentQuiz.timeRemaining}` : currentQuiz.timeRemaining;
+            document.getElementById('quizTimer').innerText = `00:${sec}`;
+        }
+
+        function selectOption(selectedIndex) {
+            clearInterval(currentQuiz.timer);
+
+            const q = currentQuiz.questions[currentQuiz.currentIndex];
+            const container = document.getElementById('quizOptionsContainer');
+            const buttons = container.children;
+
+            appState.totalQuestionsAnswered++;
+
+            // Highlight answers
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                buttons[i].classList.remove('hover:border-gh-blue');
+
+                if (i === q.answer) {
+                    buttons[i].className = "w-full text-left p-3 rounded-md bg-green-950/40 border border-gh-L4 text-sm text-white font-medium flex items-center justify-between";
+                    buttons[i].innerHTML = `<span>${q.options[i]}</span><i class="fa-solid fa-circle-check text-gh-L4"></i>`;
+                } else if (i === selectedIndex && selectedIndex !== q.answer) {
+                    buttons[i].className = "w-full text-left p-3 rounded-md bg-red-950/40 border border-gh-red text-sm text-white flex items-center justify-between";
+                    buttons[i].innerHTML = `<span>${q.options[i]}</span><i class="fa-solid fa-circle-xmark text-gh-red"></i>`;
+                }
+            }
+
+            if (selectedIndex === q.answer) {
+                currentQuiz.score++;
+                appState.correctQuestionsAnswered++;
+            }
+
+            // Show explanation
+            document.getElementById('quizExplanationText').innerText = q.explanation;
+            document.getElementById('quizExplanation').classList.remove('hidden');
+
+            // Enable next button
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.disabled = false;
+            nextBtn.className = "px-5 py-2 bg-gh-accent hover:bg-gh-accentHover text-white text-sm font-semibold rounded-md transition";
+
+            saveState();
+        }
+
+        function nextQuestion() {
+            currentQuiz.currentIndex++;
+            if (currentQuiz.currentIndex < currentQuiz.questions.length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function quitQuiz() {
+            clearInterval(currentQuiz.timer);
+            resetQuizView();
+        }
+
+        function finishQuiz() {
+            clearInterval(currentQuiz.timer);
+            appState.quizzesCompleted++;
+            saveState();
+
+            document.getElementById('quizActive').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+
+            const total = currentQuiz.questions.length;
+            const score = currentQuiz.score;
+            const percent = Math.round((score / total) * 100);
+
+            document.getElementById('resultScore').innerText = score;
+            document.getElementById('resultTotal').innerText = total;
+            document.getElementById('resultPercent').innerText = percent + '%';
+        }
+
+        function resetQuizView() {
+            document.getElementById('quizActive').classList.add('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizSelection').classList.remove('hidden');
+        }
+
+        function exportQuizToMD() {
+            const today = new Date().toISOString().split('T')[0];
+            const cat = currentQuiz.category.toUpperCase();
+            const md = `# 🏆 Practice Quiz Log - ${today}\n\n` +
+                `- **Category:** ${cat}\n` +
+                `- **Score:** ${currentQuiz.score} / ${currentQuiz.questions.length}\n` +
+                `- **Result:** ${Math.round((currentQuiz.score / currentQuiz.questions.length) * 100)}%\n\n` +
+                `### 📖 Review & Notes\n` +
+                currentQuiz.questions.map((q, idx) => `#### ${idx + 1}. ${q.q}\n- **Correct Answer:** ${q.options[q.answer]}\n- **Explanation:** ${q.explanation}\n`).join('\n') +
+                `\n---\n*Exported from GitHub Daily Dashboard*`;
+
+            const blob = new Blob([md], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `quiz-${currentQuiz.category}-${today}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("Exported Quiz Results to Markdown!");
+        }
+
+        // -------------------------------------------------------------
+        // UTILITIES
+        // -------------------------------------------------------------
+        function copyToClipboard(elementId) {
+            const elem = document.getElementById(elementId);
+            const text = elem.value || elem.innerText;
+            
+            // Fallback execCommand clipboard copy
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("Copied to clipboard!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function resetAllData() {
+            if (confirm("Reset all streak, quiz history, and commits stats?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                appState = {
+                    streak: 0,
+                    totalCommits: 0,
+                    quizzesCompleted: 0,
+                    totalQuestionsAnswered: 0,
+                    correctQuestionsAnswered: 0,
+                    commitsHistory: {}
+                };
+                saveState();
+                renderHeatmap();
+                showToast("All dashboard data reset.");
+            }
+        }
+    </script>
+</body>
+</html>
